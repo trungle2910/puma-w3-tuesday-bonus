@@ -1,13 +1,3 @@
-// -----> OVERVIEW
-// Our goal with these exercises is to use arrays, objects, and the fundamental building blocks of JS to query our data
-// and make new assertions. From a list of people whose attributes we have, what conclusions can be drawn?
-
-// -----> HINTS
-// 1. The most important piece of data we will work with is the people array below.
-// 2. Take a moment to think about the objects in the array.
-// 3. Contemplate how we could sort people based on the data we have about them.
-// 4. All functions we write in this exercise will take the people array as it's only argument
-
 const people = [
   {
     id: 1,
@@ -167,7 +157,18 @@ const people = [
     firstName: "Charles",
     lastName: "Lee",
     age: 26,
-    favoriteColors: ["red", "white", "amber", "peach", "vanilla", "chocolate", "charcoal gray", "Big Apple Red", "Bubble Bath", "Kiss me on the Tulips"],
+    favoriteColors: [
+      "red",
+      "white",
+      "amber",
+      "peach",
+      "vanilla",
+      "chocolate",
+      "charcoal gray",
+      "Big Apple Red",
+      "Bubble Bath",
+      "Kiss me on the Tulips"
+    ],
     favoriteSingers: ["Kanye West"],
     nationality: "USA",
     gender: "m",
@@ -176,7 +177,7 @@ const people = [
     company: "CoderSchool",
     friendsCount: 2121,
     followers: 212,
-    height: "169mm",
+    height: "250mm",
     weight: "90kg"
   },
   {
@@ -199,39 +200,6 @@ const people = [
 ];
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
-// -----> README
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// In the commented example below, we use the old javascript syntax to define the function getCoderSchoolStaff().
-// Although this works, we should prefer to use the new ES6 syntax.
-
-// -----> ES5(Old Javascript)
-// function getCoderSchoolStaff(persons) {
-// 		... code ...
-// }
-
-// -----> ES6(New Javascript)
-// const getCoderSchoolStaff = (persons) => {
-// 		... code ...
-// }
-// What can you see that's different with this definition and line 143?
-
-// -----> TIPS
-// I.
-// Notice that the 'function' keyword is replaced by const. Also, there is a equal = between the function name and argument(s).
-// const getCoderSchoolStaff = (persons) => {
-
-// II.
-// Notice also how the parentheses can be left out if the function takes exactly one argument(line 161 & 168 are exactly the same).
-// const getCoderSchoolStaff = (persons) => {
-
-// III.
-// Lastly, notice how the argument is proceeded by a fat arrow => and then the opening curly brace of the function body
-// const getCoderSchoolStaff = (persons) => {
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
-// ----------------------------------------------------------------------------------------------------------------------------------------
-
-// ----------------------------------------------------------------------------------------------------------------------------------------
 // -----> Examples
 // ----------------------------------------------------------------------------------------------------------------------------------------
 // 1. Define a function getAmericans() which takes the people array as an argument
@@ -239,57 +207,30 @@ const people = [
 // It should look like this[{ firstName: 'Loi', ...}, { firstName: 'Charles', ...}]
 
 const getAmericans = persons => {
-  const americans = [];
-  persons.map((person, idx) => {
-    // -----> INFO
-    // -----> SLOW DOWN LOOP
-    // -----> RUN CODE IN CONSOLE AND SEE WHAT CONSOLE OUTPUTS ON EACH ITERATION OF THIS LOOP
-    // -----> COMMENT OUT WHEN CONFIDENT YOU UNDERSTAND HOW THIS LOOP WILL BEHAVE ON EACH ITERATION
-    (() =>
-      setTimeout(() => {
-        console.log("%cIndex of people array: ", "color: green", idx);
-        console.log(`%cElement: `, "color: green", person);
-      }, 3000 * idx))(idx);
-
-    // Code below dictates behavior
-    if (person.nationality === "USA") {
-      americans.push(person);
-    }
-  });
-
-  document.getElementById("getAmericans").innerHTML = americans.map(a => `<li>${a.firstName}</li>`).join(" ")
-  return americans;
+  document.getElementById("getAmericans").innerHTML = persons
+    .filter(({ nationality }) => nationality === "USA")
+    .map(person => person.firstName)
+    .join(" ");
 };
 
 function onGetAmericans() {
-  getAmericans(people)
+  getAmericans(people);
 }
-
-// Read the code and think about it, then uncomment this line to see what the return value of getAmericans() is.
-// console.log('getAmericans', getAmericans(people));
 
 // 2. Define a function getCoderSchoolStaff() which takes the people array as an argument
 // and returns an array of people who work at 'CoderSchool'.
 // We would want it to look something like this [{ firstName: 'Loi', ...}, { firstName: 'Charles', ...}]
 
 const getCoderSchoolStaff = persons => {
-  const coderSchoolStaff = [];
-
-  persons.map(person => {
-    if (person.company === "CoderSchool") {
-      coderSchoolStaff.push(person);
-    }
-  });
-  document.getElementById("getCoderSchoolStaff").innerHTML = coderSchoolStaff.map(css => `<li>${css.firstName}</li>`).join(" ")
-  return coderSchoolStaff;
+  document.getElementById("getCoderSchoolStaff").innerHTML = persons
+    .filter(person => person.company === "CoderSchool")
+    .map(staff => `<li>${staff.firstName}</li>`)
+    .join(" ");
 };
 
 function onGetCoderSchoolStaff() {
-  getCoderSchoolStaff(people)
+  getCoderSchoolStaff(people);
 }
-
-// Read the code and think about it, then uncomment this line to see what the return value of getCoderSchoolStaff() is.
-// console.log(getCoderSchoolStaff(people));
 
 // 3. Define a function getMostPopularPerson() which takes the people array as an argument
 // and returns an object. The object will have two keys. A person key will have the person as it's value.
@@ -304,78 +245,91 @@ const getMostPopularPerson = persons => {
     const totalPopularity = person.friendsCount + person.followers;
     if (totalPopularity > mostPopulerInfo.totalPopularity) {
       const newMostPopular = { totalPopularity, person };
-      console.log("newMostPopular", newMostPopular);
       mostPopulerInfo = newMostPopular;
     }
   });
-  document.getElementById("getMostPopularPerson").innerHTML = `${mostPopulerInfo.person.firstName} is the most popular with a score of ${mostPopulerInfo.totalPopularity}`
-  return mostPopulerInfo;
+  document.getElementById("getMostPopularPerson").innerHTML = `${
+    mostPopulerInfo.person.firstName
+  } is the most popular with a score of ${mostPopulerInfo.totalPopularity}`;
 };
 
 function onGetMostPopularPerson() {
-  getMostPopularPerson(people)
+  getMostPopularPerson(people);
 }
-
-// What will mostPopularPerson be? Try in your console
-// console.log(getMostPopularPerson(people));
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
 // -----> Assignment
 // ----------------------------------------------------------------------------------------------------------------------------------------
 
-// ?. Define a function findVietnamese() which will take the people array as an argument and
+// 4. Define a function findVietnamese() which will take the people array as an argument and
 // return an array. The array will contain persons who have nationality as VN for Vietnamese.
 // Make sure the function will account for 'VN' and 'vn'
 // It should look like this [{}, {}, {}, ...]
 
-// ?. Define a function countGenders() which will take the people array as an argument and
+// 5. Define a function countGenders() which will take the people array as an argument and
 // return a string.
 // It should look like this "There are 7 males and 3 males"
 
-// ?. Define a function findStudents() which will take the people array as an argument and
+// 6. Define a function findTallest() which will take the people array as an argument and
+// return an string.
+// The string should look like "Charles was the tallest at 250mm"
+
+// 7. Define a function findAverageHeight() which will take the people array as an argument and
+// return an string.
+// The string should look like "The average height of our people is 168mm."
+
+// 8. Define a function findZodiacs() which will take the people array as an argument and
+// return an string. The string should say the users were from these signs
+// The string should look like "We have Cancers, Tauruss, ... among our people"
+
+// 9. Define a function findAverageAge() which will take the people array as an argument and
+// return an string. The string will have the average age of the people
+// The string should look like "The average age of the people is 21"
+
+// 10. Define a function findStudents() which will take the people array as an argument and
 // return an array. The array will contain persons who have jobTitle listed as 'Student'.
 // It should look like this [{}, {}, {}]
 
-// ?. Define a function findNguyens() which will take the people array as an argument and
+// 11. Define a function findNguyens() which will take the people array as an argument and
 // return an array. The array will contain persons whose last names are Nguyen.
 // It should look like this [{}, {}]
 
-// ?. Define a function findAdults() which will take the people array as an argument and
+// 12. Define a function findAdults() which will take the people array as an argument and
 // return an array. The array will contain all people who's age is above 18 and above
 // It should look like this [{}, {}, {}, ...]
 
-// ?. Define a function findFavoriteColors() which will take the people array as an argument and
+// 13. Define a function findFavoriteColors() which will take the people array as an argument and
 // return an array. The array will contain UNIQUE colors collected from all persons.
 // It should look like this ['red', 'black', 'pink', ...]
 
-// ?. Define a function findJobTitles() which will take the people array as an argument and
+// 14. Define a function findJobTitles() which will take the people array as an argument and
 // return an array. The array will contain UNIQUE jobTitles.
 // It should look like this ['CEO', 'Instructor', 'Student']
 
-// ?. Define a function findBirthYears() which will take the people array as an argument and
+// 15. Define a function findBirthYears() which will take the people array as an argument and
 // return an array. The array will contain all years which the people were born in.
 // It should look like this ['1997', '1990', '1987', ...]
 
-// ?. Define a function sortOldToYoung() which will take the people array as an argument and
+// 16. Define a function sortOldToYoung() which will take the people array as an argument and
 // return an array. The array will contain all persons sorted from oldest to youngest
 // It should look like this [{}, {}, {}, ...]
 
-// ?. Define a function splitIntoMinorsAndAdults() which will take the people array as an argument and
+// 17. Define a function splitIntoMinorsAndAdults() which will take the people array as an argument and
 // return three arrays. The first array will have two arrays within it.
 // The two nested arrays will contain persons. The 0 index nested array will have minors and the 1 index will have adults.
 // It should look like this [[{}, {}, {}, ...], [{}, {}, {}, ...]]
 
-// ?. Define a function addFavoriteHerosToPeople() which will take the people array as an argument and
+// 18. Define a function addFavoriteHerosToPeople() which will take the people array as an argument and
 // return an array. The array will contain all persons in the original array where each person has
 // a new key(favoriteSuperHeros) with the value of an empty array [].
 // It should look like this [{firstName: 'Loi', favoriteSuperHeros: [], ...}]
 
-// ?. Define a function addBirthPlacesToPeople() which will take the people array as an argument and
+// 19. Define a function addBirthPlacesToPeople() which will take the people array as an argument and
 // return an array. The array will contain all the original persons in the array with an additional
 // key(birthPlace) with the value of a new object {}.
 // It should look like this [{firstName: 'Loi', birthPlace: {}, ...}]
 
-// ?. Define a function findMostFavoritedColor() which will take the people array as an argument and
+// 20. Define a function findMostFavoritedColor() which will take the people array as an argument and
 // return an string. The string will be the color which has the most people that have it in their favoriteColors.
 // In the event there are two colors with equal numbers. Return a string that says 'x and y were really popular!'
 // It should look like this 'black' or 'black and red were really popular!'
