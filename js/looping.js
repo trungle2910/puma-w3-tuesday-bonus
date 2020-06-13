@@ -196,7 +196,24 @@ const people = [
     followers: 212,
     height: "169mm",
     weight: "90kg"
-  }
+  },
+  {
+    id: 11,
+    firstName: "Duy Hung",
+    lastName: "Nguyen",
+    age: 13,
+    favoriteColors: ["black", "yellow", "blue"],
+    favoriteSingers: ["Bonnie Tyler"],
+    nationality: "Vietnamese",
+    gender: "m",
+    zodiac: "Scorpio",
+    jobTitle: "Student",
+    company: "Company of Life",
+    friendsCount: 500,
+    followers: 300,
+    height: "160mm",
+    weight: "70kg"
+  },
 ];
 
 // ----------------------------------------------------------------------------------------------------------------------------------------
