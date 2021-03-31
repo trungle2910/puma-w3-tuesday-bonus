@@ -443,25 +443,55 @@ const getFavoriteColors = (persons) => {
 function findFavoriteColors() {
   getFavoriteColors(people);
 }
-// 12. Define a function findAdults() which will take the people array as an argument and
-// return an array. The array will contain all people who's age is above 18 and above
-// It should look like this [{}, {}, {}, ...]
+const getJobTitles = (persons) => {
+  let jobTitle = [];
+  persons.forEach((job) => {
+    let haveJob = jobTitle.find(
+      (item) => item.toLowerCase() == job.jobTitle.toLowerCase()
+    );
+    if (!haveJob) {
+      jobTitle.push(job.jobTitle);
+    }
+  });
+  document.getElementById("getJobTitles").innerHTML = `${jobTitle
+    .map((item) => `<li>${item}</li>`)
+    .join("")}`;
+};
 
-// 13. Define a function findFavoriteColors() which will take the people array as an argument and
-// return an array. The array will contain UNIQUE colors collected from all persons.
-// It should look like this ['red', 'black', 'pink', ...]
-
-// 14. Define a function findJobTitles() which will take the people array as an argument and
-// return an array. The array will contain UNIQUE jobTitles.
-// It should look like this ['CEO', 'Instructor', 'Student']
+function findJobTitles() {
+  getJobTitles(people);
+}
 
 // 15. Define a function findBirthYears() which will take the people array as an argument and
 // return an array. The array will contain all years which the people were born in.
 // It should look like this ['1997', '1990', '1987', ...]
+const getBirthYears = (persons) => {
+  let currentYear = new Date().getFullYear();
+  document.getElementById("getBirthYears").innerHTML = persons
+    .map(
+      (item) =>
+        `<li>${item.firstName} ${item.lastName}: ${currentYear - item.age}</li>`
+    )
+    .join(" ");
+};
+
+function findBirthYears() {
+  getBirthYears(people);
+}
 
 // 16. Define a function sortOldToYoung() which will take the people array as an argument and
 // return an array. The array will contain all persons sorted from oldest to youngest
 // It should look like this [{}, {}, {}, ...]
+
+const getOldToYoung = (persons) => {
+  document.getElementById("getOldToYoung").innerHTML = persons
+    .sort((a, b) => b.age - a.age)
+    .map((item) => `<li>${item.firstName} ${item.lastName}: ${item.age}</li>`)
+    .join(" ");
+};
+function sortOldToYoung() {
+  getOldToYoung(people);
+}
 
 // 17. Define a function splitIntoMinorsAndAdults() which will take the people array as an argument and
 // return three arrays. The first array will have two arrays within it.
