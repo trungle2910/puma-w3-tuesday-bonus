@@ -401,7 +401,48 @@ function findStudents() {
 // 11. Define a function findNguyens() which will take the people array as an argument and
 // return an array. The array will contain persons whose last names are Nguyen.
 // It should look like this [{}, {}]
+const getNguyens = (persons) => {
+  document.getElementById("getNguyens").innerHTML = persons
+    .filter((item) => item.lastName == "Nguyen")
+    .map((item) => `<li>${item.firstName} ${item.lastName}</li>`)
+    .join("");
+};
+function findNguyens() {
+  getNguyens(people);
+}
+// 12. Define a function findAdults() which will take the people array as an argument and
+// return an array. The array will contain all people who's age is above 18 and above
+// It should look like this [{}, {}, {}, ...]
+const getAdults = (persons) => {
+  document.getElementById("getAdults").innerHTML = persons
+    .filter((item) => item.age >= 18)
+    .map((item) => `<li>${item.firstName} ${item.lastName}</li>`)
+    .join(" ");
+};
+function findAdults() {
+  getAdults(people);
+}
 
+// 13. Define a function findFavoriteColors() which will take the people array as an argument and
+// return an array. The array will contain UNIQUE colors collected from all persons.
+// It should look like this ['red', 'black', 'pink', ...]
+const getFavoriteColors = (persons) => {
+  let color = [];
+  people.forEach((a) => {
+    a.favoriteColors.forEach((b) => {
+      let current = color.find((item) => item.toLowerCase() == b.toLowerCase());
+      if (!current) {
+        color.push(b);
+      }
+    });
+  });
+  document.getElementById("getFavoriteColors").innerHTML = `${color
+    .map((item) => item)
+    .join(", ")}`;
+};
+function findFavoriteColors() {
+  getFavoriteColors(people);
+}
 // 12. Define a function findAdults() which will take the people array as an argument and
 // return an array. The array will contain all people who's age is above 18 and above
 // It should look like this [{}, {}, {}, ...]
